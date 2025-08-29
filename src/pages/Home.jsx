@@ -148,7 +148,7 @@ const Home = () => {
       )}
 
       {/* GRID LAYOUT */}
-      <div ref={gridRef} className="relative grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-0 mt-4 mb-[5%]">
+      <div ref={gridRef} className="relative grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-0 mt-4 mb-20">
         {/* {artists.map((artist, index) => ( */}
         {/* {filteredArtists.map((artist, index) => ( */}
         {/* {(shuffled ? shuffledArtists : filteredArtists).map((artist, index) => ( */}
