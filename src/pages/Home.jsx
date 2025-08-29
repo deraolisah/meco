@@ -70,12 +70,12 @@ const Home = () => {
           <div
             onClick={() => handleClick(artist)}
             key={index}
-            className="w-full group bg-gradient-to-bl from-blue-200 via-pink-600 to-green-900 transition-transform duration-300 cursor-pointer overflow-hidden"
+            className="w-full bg-gradient-to-bl from-blue-200 via-pink-600 to-green-900 transition-transform duration-300 cursor-pointer overflow-hidden"
             onMouseMove={(e) => handleMouseMove(e, index)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
             <div className='aspect-[4/5]'>
-              <img src={artist.image} alt={artist.tag} className="w-full h-full group-hover:scale-[1.02] transition-all duration-200 object-cover object-top" />
+              <img src={artist.image} alt={artist.tag} className="w-full h-full transition-all duration-200 object-cover object-top" loading='lazy' />
             </div>
           </div>
         ))}
@@ -84,7 +84,7 @@ const Home = () => {
         {hoveredIndex !== null && (
           <div
             key={hoveredIndex}
-            className="w-fit absolute bg-black/80 backdrop-blur-xs shadow-lg text-white p-3 pointer-events-none z-10 transition-all duration-50 ease-in-out space-y-1"
+            className="w-fit absolute bg-black/85 backdrop-blur-xs shadow-lg text-white p-3 pointer-events-none z-10 transition-all duration-50 ease-in-out space-y-1"
             style={{
               top: tooltipPos.top,
               left: tooltipPos.left,

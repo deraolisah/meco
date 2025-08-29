@@ -25,11 +25,11 @@ const Navbar = () => {
       </div>
 
 
-      <ul className={`md:max-h-fit flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-6 font-semibold w-full md:w-fit overflow-hidden transition-all duration-200 ${menuOpen ? "max-h-auto" : "max-h-0"}`}>
-        <li><a href="/releases" className='hover:text-gray-400'> Releases </a></li>
-        <li><a href="/history" className='hover:text-gray-400'> History </a></li>
-        <li><a href="/store" className='hover:text-gray-400'> Store </a></li>
-        <li><a href='/contact' className='hover:text-gray-400'> Contact </a></li>
+      <ul className={`md:max-h-fit flex flex-col md:flex-row items-end md:items-center gap-2 md:gap-6 font-semibold w-full md:w-fit overflow-hidden transition-all duration-200 ${menuOpen ? "max-h-auto" : "max-h-0"}`}>
+        <a href="/releases" className='w-full md:w-fit text-end hover:text-gray-400 mt-4 md:mt-0'> Releases </a>
+        <a href="/history" className='w-full md:w-fit text-end hover:text-gray-400'> History </a>
+        <a href="/store" className='w-full md:w-fit text-end hover:text-gray-400'> Store </a>
+        <a href='/contact' className='w-full md:w-fit text-end hover:text-gray-400'> Contact </a>
       </ul>
     </nav>
   )
