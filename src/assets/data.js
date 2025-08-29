@@ -190,6 +190,60 @@ export const artists = [
     bio: "Andre Kingston, known by his striking stage name Stardust Royale, is the modern face of glam rock. Hailing from Detroit, Michigan, Stardust Royale blends the theatricality and extravagance of 70s glam legends with a futuristic twist, creating music that is as daring as his iconic style. \n\nHis debut album, Rebellion, is a high-octane journey through soaring guitar solos, explosive anthems, and lyrics that celebrate individuality, freedom, and the unapologetic pursuit of self-expression. Inspired by greats like Freddie Mercury and T. Rex, Stardust Royale’s sound is larger-than-life, just like his persona. \n\nOn stage, Stardust Royale is pure energy and spectacle—glittering costumes, electrifying choreography, and an undeniable charisma that makes every performance unforgettable. Offstage, he’s a passionate advocate for creative expression and diversity in the music industry, using his voice to inspire a new generation of artists to break boundaries. Stardust Royale isn’t just a rock star—he’s a cosmic force of nature." 
   },
   { 
+    num: 22, 
+    id: "teros", 
+    tag: "Teros", 
+    name: "Teros Ayhan", 
+    genre: "Neo-Soul", 
+    image: "https://playersclub88.netlify.app/images/artists/teros.webp", 
+    bio: "Teros Ayhan, known simply as Teros, is a rising force in the Neo-Soul scene, merging the genre’s rich, emotional depth with the dreamy expansiveness of psychedelic sounds. With his hauntingly smooth vocals and textured production, Teros invites listeners into a soundscape that feels both timeless and otherworldly. \n\nHis debut EP, Aurora Drift, explores themes of existential longing, love, and the pursuit of inner peace. The project draws from a wide array of influences, from the hypnotic grooves of D’Angelo to the atmospheric experimentation of Tame Impala, creating a unique and immersive listening experience. \n\nOn stage, Teros is a magnetic presence. Draped in bold, avant-garde fashion, his performances blend live instrumentation with ambient visuals, transporting audiences into a dreamlike trance. Critics have described his live shows as “a cinematic journey through sound and emotion.” \n\nOutside of music, Teros is a passionate advocate for environmental sustainability, often collaborating with eco-conscious brands and using his platform to raise awareness about climate change. With his innovative artistry and commitment to meaningful change, Teros is redefining what it means to be a modern artist." 
+  },
+  { 
+    num: 23, 
+    id: "velvet-rush", 
+    tag: "Velvet Rush", 
+    name: "Sophia Nguyen", 
+    genre: "Neo-Soul", 
+    image: "https://playersclub88.netlify.app/images/artists/velvet_rush.webp", 
+    bio: "Sophia Nguyen, who graces the stage as Velvet Rush, is a rising star redefining the neo-soul genre. Born and raised in New Orleans, her music reflects a unique fusion of sultry vocals, jazzy undertones, and her Vietnamese heritage. \n\nHer debut album, Golden Hour, is a masterful blend of emotional depth and musical sophistication, earning her accolades for its heartfelt lyrics and lush instrumentation. Listeners are drawn to Velvet Rush’s ability to tell stories through her music, weaving tales of love, resilience, and self-discovery. \n\nSophia’s performances are known for their intimate atmosphere, often set in dimly lit jazz clubs where her golden voice shines brightest. Beyond her music, Velvet Rush is a passionate advocate for cultural diversity in the arts, inspiring others to embrace their unique stories." 
+  },
+  { 
+    num: 24, 
+    id: "vxn", 
+    tag: "VXN", 
+    name: "Marco Alvarez", 
+    genre: "Cinematic Electronic", 
+    image: "https://playersclub88.netlify.app/images/artists/vxn.webp", 
+    bio: "Marco Alvarez, better known by his stage name VXN, is a groundbreaking producer in the cinematic electronic music scene. Born in Madrid, Spain, and now based in Berlin, VXN creates haunting soundscapes that blend atmospheric textures with pulsating beats, perfect for late-night introspection or high-energy moments. \n\nHis debut EP, Shadowscapes, earned acclaim for its innovative fusion of dark synths, orchestral layers, and driving rhythms. Drawing inspiration from film scores and underground techno, VXN’s tracks are immersive experiences that transport listeners to another world. \n\nVXN’s live performances are a spectacle of light and sound, featuring custom visuals that complement his music’s otherworldly vibe. Offstage, he’s a sound design enthusiast and often collaborates with filmmakers and game developers to create bespoke audio experiences. With his unique artistry, VXN is redefining the boundaries of electronic music." 
+  },
+  { 
+    num: 25, 
+    id: "wale", 
+    tag: "Wale", 
+    name: "Wyatt Monroe", 
+    genre: "Dream Pop", 
+    image: "https://playersclub88.netlify.app/images/artists/wale.webp", 
+    bio: "Wyatt Monroe, known by his stage name Wale, is a captivating presence in the Dream Pop genre. With his ethereal vocals, atmospheric soundscapes, and poetic lyricism, Wale crafts music that feels like stepping into a lucid dream. Hailing from Edinburgh, Scotland, his sound blends wistful melodies with modern production, creating a haunting yet soothing experience. \n\nHis debut album, Faded, quickly gained attention for its ability to transport listeners to otherworldly places, exploring themes of nostalgia, vulnerability, and fleeting moments of connection. Influenced by artists like Beach House and Cigarettes After Sex, Wale’s music captures the beauty in stillness and longing. \n\nOn stage, Weston’s performances are intimate and immersive, often accompanied by hypnotic visuals and minimalist lighting. Offstage, he’s an introspective artist who finds inspiration in nature and quiet solitude, translating these moments into his work. Wale is redefining dream pop with a sound that lingers long after the last note fades." 
+  },
+  { 
+    num: 26, 
+    id: "z-t", 
+    tag: "Z.T.", 
+    name: "Zion Maxim Torres", 
+    genre: "Hip-Hop", 
+    image: "https://playersclub88.netlify.app/images/artists/z_t.webp", 
+    bio: "Zion Torres, professionally known as Z.T., is a rising name in the minimalist hip-hop scene. Hailing from Brooklyn, New York, Z.T. creates music that strips away the excess, focusing on raw beats and lyrics that hit with emotional precision. His sound reflects his mantra: less is more. \n\nHis debut mixtape, Death, earned praise for its introspective lyrics and innovative use of silence and space in production. Z.T. crafts stories of urban life, self-reflection, and resilience, connecting deeply with his audience through simplicity and authenticity. \n\nZ.T.’s live performances are as minimalist as his sound—favoring intimate venues where the focus is on his words and delivery rather than flashy theatrics. Off the mic, he’s a passionate mentor to young artists, emphasizing the importance of finding one’s voice. With his understated yet impactful approach, Z.T. is redefining what it means to be a hip-hop artist in the modern era." 
+  },
+  { 
+    num: 27, 
+    id: "zariah-bloom", 
+    tag: "Zariah Bloom.", 
+    name: "Imani Bishop", 
+    genre: "Neo-Soul", 
+    image: "https://playersclub88.netlify.app/images/artists/zariah_bloom.webp", 
+    bio: "Imani Bishop, known to the world as Zariah Bloom, is a visionary in the Neo-Soul scene. With a voice that intertwines vulnerability and strength, Zariah crafts music that feels both deeply personal and universally resonant. Hailing from Harlem, New York, she draws from her community’s rich cultural history while forging a sound that’s refreshingly modern. \n\nHer debut album, Bloom Theory, is a soulful exploration of love, self-awareness, and the power of growth. Rooted in influences from Sade and Solange, Zariah Bloom’s music is lush and layered, infused with organic instrumentation and contemporary beats that linger long after the music ends. \n\nLive, Zariah is magnetic, channeling her emotions into performances that are as empowering as they are intimate. Offstage, she’s a dedicated advocate for women’s empowerment and creative freedom, mentoring emerging female artists and championing individuality. Zariah Bloom is not just a performer; she’s a movement, a blossoming force reshaping neo-soul for a new era." 
+  },
+  { 
     num: 28, 
     id: "zenji", 
     tag: "Zenji", 
