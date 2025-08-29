@@ -4,7 +4,22 @@ import { useNavigate } from 'react-router-dom';
 import { artists } from "../assets/data";
 
 
+const shuffleArray = (array) => {
+  const copy = [...array];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+};
+
 const Home = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
+  const [sortOrder, setSortOrder] = useState(null); // 'asc' or 'desc'
+  const [shuffled, setShuffled] = useState(false);
+  const [shuffledArtists, setShuffledArtists] = useState([]);
+
   const navigate = useNavigate();
 
   const gridRef = useRef(null);
@@ -41,6 +56,22 @@ const Home = () => {
 
 
 
+  let filteredArtists = artists.filter((artist) =>
+    artist.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    artist.tag.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (sortOrder === 'asc') {
+    filteredArtists.sort((a, b) => a.num - b.num);
+  } else if (sortOrder === 'desc') {
+    filteredArtists.sort((a, b) => b.num - a.num);
+  }
+
+  if (shuffled) {
+    filteredArtists = shuffleArray(filteredArtists);
+  }
+
+  const displayedArtists = shuffled ? shuffledArtists : filteredArtists;
 
   
 
@@ -49,24 +80,79 @@ const Home = () => {
   };
 
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 's') {
+        e.preventDefault();
+        setShowSearch(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+
   return (
     <main className='flex flex-col overflow-x-hidden'>
       <div className='flex items-end justify-between py-4.5 border-b border-gray-300'>
         <div className='flex flex-col md:flex-row items-start md:items-end gap-1 md:gap-6'>
           <h1 className='text-2xl md:text-5xl font-bold'> Artists </h1>
-
           <span className='text-base font-semibold space-x-4 md:mb-px'>
-            <button className='cursor-pointer hover:underline'> Sort </button>
-            <button className='cursor-pointer hover:underline'> Shuffle </button>
-            <button className='cursor-pointer hover:underline'> Search </button>
+            {/* <button className='cursor-pointer hover:underline' onClick={() => {
+              setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+              setShuffled(false);}}>
+              Sort {sortOrder === 'asc' ? '↓' : sortOrder === 'desc' ? '↑' : ''}
+              </button> */}
+            <button className='cursor-pointer hover:underline' onClick={() => {
+              setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+              setShuffled(false);}}>
+              Sort {sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : ''}
+            </button>
+
+            <button className='cursor-pointer hover:underline' onClick={() => {
+              const shuffledList = shuffleArray(filteredArtists);
+              setShuffledArtists(shuffledList);
+              setShuffled(true);
+              setSortOrder(null);}}>
+              Shuffle
+            </button>
+            <button className='cursor-pointer hover:underline' onClick={() => setShowSearch(true)}> Search </button>
           </span>
         </div>
-
         <p className='text-2xl font-extrabold'> ({artists.length}) </p>
       </div>
 
+      {/* SEARCH */}
+      {showSearch && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="bg-black p-8 shadow-lg w-[90%] max-w-md relative">
+            <button
+              onClick={() => setShowSearch(false)}
+              className="absolute top-2 right-4 font-normal text-white cursor-pointer text-2xl"
+            >
+              {/* &times; */}
+              ×
+            </button>
+            {/* <h2 className="text-xl text-white font-bold mb-4">Search</h2> */}
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchTerm}
+              // onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {setSearchTerm(e.target.value);setShuffled(false);}}
+              className="w-full py-1 border-b mt-4 text-2xl font-extrabold text-white border-gray-300 focus:outline-none placeholder-gray-600"
+            />
+            <span className='text-sm text-gray-300'> Enter a name or stage name </span>
+          </div>
+        </div>
+      )}
+
+      {/* GRID LAYOUT */}
       <div ref={gridRef} className="relative grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-0 mt-4 mb-[5%]">
-        {artists.map((artist, index) => (
+        {/* {artists.map((artist, index) => ( */}
+        {/* {filteredArtists.map((artist, index) => ( */}
+        {/* {(shuffled ? shuffledArtists : filteredArtists).map((artist, index) => ( */}
+        {displayedArtists.map((artist, index) => (
           <div
             onClick={() => handleClick(artist)}
             key={index}
@@ -92,11 +178,14 @@ const Home = () => {
             }}
           >
             <h2 className="text-xs font-bold uppercase overflow-hidden animate-slideDown">
-              {artists[hoveredIndex].tag}
+              {/* {artists[hoveredIndex].tag} */}
+              {displayedArtists[hoveredIndex].tag}
             </h2>
             <div className="flex items-center justify-between gap-6 overflow-hidden">
-              <p className="text-xs text-gray-300 animate-slideUp">{artists[hoveredIndex].name}</p>
-              <p className="text-xs text-gray-300 animate-slideUp">{artists[hoveredIndex].genre}</p>
+              {/* <p className="text-xs text-gray-300 animate-slideUp">{artists[hoveredIndex].name}</p>
+              <p className="text-xs text-gray-300 animate-slideUp">{artists[hoveredIndex].genre}</p> */}
+              <p className="text-xs text-gray-300 animate-slideUp">{displayedArtists[hoveredIndex].name}</p>
+              <p className="text-xs text-gray-300 animate-slideUp">{displayedArtists[hoveredIndex].genre}</p>
             </div>
           </div>
         )}
