@@ -21,7 +21,7 @@ const Footer = () => {
       </span>
 
       <br/>
-      <span> Browse <a href="https://github.com/deraolisah/meco" target='_blank'>The GitHub Repo.</a></span>
+      <span> Browse <a href="https://github.com/deraolisah/meco" target='_blank' className='text-black font-bold hover:underline'>The GitHub Repo.</a></span>
     </footer>
   )
 }
