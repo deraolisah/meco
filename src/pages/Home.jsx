@@ -1,7 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { artists } from "../assets/data";
+import gsap from "gsap";
+import { useLayoutEffect } from "react";
 
 
 const shuffleArray = (array) => {
@@ -21,9 +23,50 @@ const Home = () => {
   const [shuffledArtists, setShuffledArtists] = useState([]);
 
   const navigate = useNavigate();
-
   const gridRef = useRef(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const hasAnimated = useRef(false);
+
+
+  // SEARCH FILTER, SORTING AND SHUFFLE
+  let filteredArtists = artists.filter((artist) =>
+    artist.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    artist.tag.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (sortOrder === 'asc') {
+    filteredArtists.sort((a, b) => a.num - b.num);
+  } else if (sortOrder === 'desc') {
+    filteredArtists.sort((a, b) => b.num - a.num);
+  }
+
+  if (shuffled) {
+    filteredArtists = shuffleArray(filteredArtists);
+  }
+
+  const displayedArtists = shuffled ? shuffledArtists : filteredArtists;
+
+
+  // GSAP STAGGERED ANIMATION
+  useLayoutEffect(() => {
+    if (hasAnimated.current) return;
+
+    const cards = gridRef.current.querySelectorAll(".artist-card");
+
+    gsap.to(cards, {
+      y: 0,
+      opacity: 1,
+      duration: 0.88,
+      ease: "power3.out",
+      stagger: 0.15,
+      // clearProps: "opacity-0", // removes inline styles after animation
+    });
+
+    hasAnimated.current = true;
+  }, []);
+
+
+  // MOUSE-HOVER TOOLTIP EFFECT
+  // const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
 
@@ -55,24 +98,6 @@ const Home = () => {
 
 
 
-
-  let filteredArtists = artists.filter((artist) =>
-    artist.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    artist.tag.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  if (sortOrder === 'asc') {
-    filteredArtists.sort((a, b) => a.num - b.num);
-  } else if (sortOrder === 'desc') {
-    filteredArtists.sort((a, b) => b.num - a.num);
-  }
-
-  if (shuffled) {
-    filteredArtists = shuffleArray(filteredArtists);
-  }
-
-  const displayedArtists = shuffled ? shuffledArtists : filteredArtists;
-
   
 
   const handleClick = (artist) => {
@@ -80,6 +105,7 @@ const Home = () => {
   };
 
 
+  // SEARCH KEY
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 's') {
@@ -148,7 +174,7 @@ const Home = () => {
       )}
 
       {/* GRID LAYOUT */}
-      <div ref={gridRef} className="relative grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-0 mt-4 h-fit">
+      <div ref={gridRef} className="relative grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-0 my-4 -space-px overflow-hidden">
         {/* {artists.map((artist, index) => ( */}
         {/* {filteredArtists.map((artist, index) => ( */}
         {/* {(shuffled ? shuffledArtists : filteredArtists).map((artist, index) => ( */}
@@ -156,7 +182,7 @@ const Home = () => {
           <div
             onClick={() => handleClick(artist)}
             key={index}
-            className="w-full bg-gradient-to-bl from-blue-200 via-pink-600 to-green-900 transition-transform duration-300 cursor-pointer overflow-hidden"
+            className="artist-card will-change-transform opacity-0 translate-y-4 w-full bg-gradient-to-bl from-blue-200 via-pink-600 to-green-900 transition-transform duration-300 cursor-pointer overflow-hidden"
             onMouseMove={(e) => handleMouseMove(e, index)}
             onMouseLeave={() => setHoveredIndex(null)}
           >

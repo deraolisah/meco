@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className='w-full border-t border-gray-400 mt-20 pt-8 pb-6 text-center text-gray-800 font-medium'>
+    <footer className='w-full border-t border-gray-400 pt-8 pb-6 text-center text-gray-800 font-medium '>
       <p> 
         Based on the design by Alex Tkachev.&nbsp;
         
