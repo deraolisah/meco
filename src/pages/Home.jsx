@@ -23,8 +23,21 @@ const Home = () => {
   const [shuffledArtists, setShuffledArtists] = useState([]);
 
   const navigate = useNavigate();
+
   const gridRef = useRef(null);
-  const hasAnimated = useRef(false);
+  const headerRef = useRef(null);
+  const buttonRefs = useRef([]);
+  buttonRefs.current = [];
+  const borderRef = useRef(null);
+  const countRef = useRef(null);
+  const [artistCount, setArtistCount] = useState(0);
+  const [animatedCount, setAnimatedCount] = useState(0);
+
+  useEffect(() => {
+    if (artists.length > 0) {
+      setArtistCount(artists.length);
+    }
+  }, [artists]);
 
 
   // SEARCH FILTER, SORTING AND SHUFFLE
@@ -32,21 +45,18 @@ const Home = () => {
     artist.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     artist.tag.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
   if (sortOrder === 'asc') {
     filteredArtists.sort((a, b) => a.num - b.num);
   } else if (sortOrder === 'desc') {
     filteredArtists.sort((a, b) => b.num - a.num);
   }
-
   if (shuffled) {
     filteredArtists = shuffleArray(filteredArtists);
   }
-
   const displayedArtists = shuffled ? shuffledArtists : filteredArtists;
 
 
-  // GSAP STAGGERED ANIMATION      
+  // GSAP CARDS STAGGERED ANIMATION      
   const animateCards = (gridRef) => {
     const cards = gridRef.current?.querySelectorAll(".artist-card");
     if (!cards || cards.length === 0) return;
@@ -61,7 +71,6 @@ const Home = () => {
       // clearProps: "opacity-0", // removes inline styles after animation
     });
   }; 
-
   useLayoutEffect(() => {
     const timeout = setTimeout(() => {
       animateCards(gridRef);
@@ -69,7 +78,6 @@ const Home = () => {
 
     return () => clearTimeout(timeout);
   }, []);
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       animateCards(gridRef);
@@ -79,14 +87,72 @@ const Home = () => {
   }, [displayedArtists]);
 
 
-  const borderRef = useRef(null);
+
+  // GSAP SLIDE-IN ANIMATIONS
   useEffect(() => {
+    // Animate Header
+    gsap.fromTo(
+      headerRef.current,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, delay: 0.8, ease: 'power2.out' }
+    );
+    // Animate Buttons
+    gsap.fromTo(
+      buttonRefs.current,
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        delay: 0.88,
+        duration: 0.8,
+        ease: 'power2.out',
+        stagger: 0.15
+      }
+    );
+    // Animate Border
     gsap.fromTo(
       borderRef.current,
       { width: '0%' },
-      { width: '100%', duration: 1, delay: 0.7, ease: 'power2.out' }
+      { width: '100%', duration: 1, delay: 0.9, ease: 'power2.out' }
     );
+    // Animate Count
+    // gsap.fromTo(
+    //   countRef.current,
+    //   { y: 20, opacity: 0 },
+    //   { y: 0, opacity: 1, duration: 0.6, delay: 1, ease: 'power2.out' }
+    // );
+    // gsap.to(animatedCount, {
+    //   duration: 1,
+    //   value: artists.length,
+    //   ease: 'power2.out',
+    //   onUpdate: function () {
+    //     setAnimatedCount(Math.floor(this.targets()[0].value));
+    //   },
+    //   delay: 1
+    // });
   }, []);
+
+  useEffect(() => {
+    if (artistCount > 0) {
+      gsap.fromTo(
+        countRef.current,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, delay: 1, ease: 'power2.out' }
+      );
+
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: artistCount,
+        duration: 1.2,
+        delay: 1.6, // starts after fade-in
+        ease: 'power2.out',
+        onUpdate: () => {
+          setAnimatedCount(Math.floor(obj.val));
+        }
+      });
+    }
+  }, [artistCount]);
+
 
 
 
@@ -110,7 +176,6 @@ const Home = () => {
     if (left + tooltipWidth > gridBounds.width) {
       left = gridBounds.width - tooltipWidth - 10;
     }
-
     // Prevent overflow bottom
     if (top + tooltipHeight > gridBounds.height) {
       top = gridBounds.height - tooltipHeight - 10;
@@ -122,9 +187,7 @@ const Home = () => {
 
 
 
-
-  
-
+  // Navigate to Artist Details Page
   const handleClick = (artist) => {
     navigate(`/artist/${artist.id}`);
   };
@@ -147,8 +210,33 @@ const Home = () => {
     <main className='flex flex-col overflow-x-hidden'>
       <div className='flex items-end justify-between py-4.5 relative'>
         <div className='flex flex-col md:flex-row items-start md:items-end gap-1 md:gap-6'>
-          <h1 className='text-2xl md:text-5xl font-bold'> Artists </h1>
+          <h1 ref={headerRef} className='text-2xl md:text-5xl font-bold'> Artists </h1>
           <span className='text-base font-semibold space-x-4 md:mb-px'>
+            {["Sort", "Shuffle", "Search"].map((label, index) => (
+              <button
+                key={label}
+                ref={el => buttonRefs.current[index] = el}
+                className='cursor-pointer hover:underline'
+                onClick={() => {
+                  if (label === "Sort") {
+                    setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'));
+                    setShuffled(false);
+                  } else if (label === "Shuffle") {
+                    const shuffledList = shuffleArray(filteredArtists);
+                    setShuffledArtists(shuffledList);
+                    setShuffled(true);
+                    setSortOrder(null);
+                  } else {
+                    setShowSearch(true);
+                  }
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </span>
+
+          {/* <span className='text-base font-semibold space-x-4 md:mb-px'>
             <button className='cursor-pointer hover:underline' onClick={() => {
               setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
               setShuffled(false);}}>
@@ -163,9 +251,9 @@ const Home = () => {
               Shuffle
             </button>
             <button className='cursor-pointer hover:underline' onClick={() => setShowSearch(true)}> Search </button>
-          </span>
+          </span> */}
         </div>
-        <p className='text-2xl font-extrabold'> ({artists.length}) </p>
+        <p ref={countRef} className='text-2xl font-extrabold'> ({animatedCount}) </p>
         <div ref={borderRef} className="absolute bottom-0 left-0 h-[1px] bg-gray-300"></div>
       </div>
 

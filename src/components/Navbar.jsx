@@ -4,9 +4,10 @@ import gsap from 'gsap';
 const Navbar = () => {
 
   const [menuOpen, setMenuOpen] = useState(false);
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-  }
+  };
 
   // GSAP ANIMATIONS
   const borderRef = useRef(null);
@@ -14,19 +15,21 @@ const Navbar = () => {
   const menuItemRefs = useRef([]);
   menuItemRefs.current = [];
 
-  useEffect(() => {
-    // Animate border
-    gsap.fromTo(
-      borderRef.current,
-      { width: '0%' },
-      { width: '100%', duration: 1, delay: 0.4, ease: 'power2.out' }
-    );
+  const toggleIconRef = useRef(null);
 
-    // Animate logo
+  useEffect(() => {
+     // Animate logo
     gsap.fromTo(
       logoRef.current,
       { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', delay: 0.2 }
+      { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', }
+    );
+
+    // Animate Menu Button
+    gsap.fromTo(
+      toggleIconRef.current,
+      { scale: 0.6, rotate: -20, opacity: 0 },
+      { scale: 1, rotate: 0, opacity: 1, duration: 0.6, delay: 0.5, ease: 'power2.out' }
     );
 
     // Animate menu items with stagger
@@ -37,10 +40,17 @@ const Navbar = () => {
         y: 0,
         opacity: 1,
         duration: 0.6,
+        delay: 0.45,
         ease: 'power2.out',
         stagger: 0.15,
-        delay: 0.4
       }
+    );
+
+    // Animate border
+    gsap.fromTo(
+      borderRef.current,
+      { width: '0%' },
+      { width: '100%', duration: 1, delay: 0.65, ease: 'power2.out' }
     );
   }, []);
 
@@ -51,18 +61,12 @@ const Navbar = () => {
     <nav className='w-full pb-4 flex flex-wrap items-center justify-between relative'>
       <a ref={logoRef} href='/' className='text-lg font-bold'> Meco Club </a>
 
-      <div className='flex md:hidden cursor-pointer bg-gray-300 p-1.5' onClick={toggleMenu} title='menu'>
-        {!menuOpen ? (
-          <div className='text-5xl w-4 h-4 flex items-center justify-center font-normal'>
-            {/* <span className='h-0.5 w-5.5 bg-black rounded-full'></span>
-            <span className='h-0.5 w-5.5 bg-black rounded-full'></span> */}
-            =
-          </div>
-        ) : (
-          <div className='text-5xl w-4 h-4 flex items-center justify-center font-normal '>
-            ×
-          </div>
-        )}
+      <div 
+        ref={toggleIconRef} 
+        className='flex md:hidden cursor-pointer bg-gray-300 text-5xl w-6.5 h-6.5 items-center justify-center font-normal p-1.5' 
+        onClick={toggleMenu} 
+        title='menu'>
+          {menuOpen ? '×' : '='}
       </div>
 
 
