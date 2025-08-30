@@ -174,7 +174,7 @@ const Home = () => {
       )}
 
       {/* GRID LAYOUT */}
-      <div ref={gridRef} className="relative grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-0 my-4 -space-px overflow-hidden">
+      <div ref={gridRef} className="relative grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-0 my-4 h-fit -space-px overflow-hidden">
         {/* {artists.map((artist, index) => ( */}
         {/* {filteredArtists.map((artist, index) => ( */}
         {/* {(shuffled ? shuffledArtists : filteredArtists).map((artist, index) => ( */}
