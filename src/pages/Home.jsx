@@ -46,12 +46,11 @@ const Home = () => {
   const displayedArtists = shuffled ? shuffledArtists : filteredArtists;
 
 
-  // GSAP STAGGERED ANIMATION
-  useLayoutEffect(() => {
-    if (hasAnimated.current) return;
-
-    const cards = gridRef.current.querySelectorAll(".artist-card");
-
+  // GSAP STAGGERED ANIMATION      
+  const animateCards = (gridRef) => {
+    const cards = gridRef.current?.querySelectorAll(".artist-card");
+    if (!cards || cards.length === 0) return;
+    
     gsap.to(cards, {
       y: 0,
       opacity: 1,
@@ -60,9 +59,26 @@ const Home = () => {
       stagger: 0.15,
       // clearProps: "opacity-0", // removes inline styles after animation
     });
+  }; 
 
-    hasAnimated.current = true;
+  useLayoutEffect(() => {
+    const timeout = setTimeout(() => {
+      animateCards(gridRef);
+    }, 50); // slight delay to ensure DOM is ready
+
+    return () => clearTimeout(timeout);
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      animateCards(gridRef);
+    }, 50); // wait for DOM to update
+
+    return () => clearTimeout(timeout);
+  }, [displayedArtists]);
+
+
+
 
 
   // MOUSE-HOVER TOOLTIP EFFECT
@@ -124,11 +140,6 @@ const Home = () => {
         <div className='flex flex-col md:flex-row items-start md:items-end gap-1 md:gap-6'>
           <h1 className='text-2xl md:text-5xl font-bold'> Artists </h1>
           <span className='text-base font-semibold space-x-4 md:mb-px'>
-            {/* <button className='cursor-pointer hover:underline' onClick={() => {
-              setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-              setShuffled(false);}}>
-              Sort {sortOrder === 'asc' ? '↓' : sortOrder === 'desc' ? '↑' : ''}
-              </button> */}
             <button className='cursor-pointer hover:underline' onClick={() => {
               setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
               setShuffled(false);}}>
@@ -156,16 +167,13 @@ const Home = () => {
               onClick={() => setShowSearch(false)}
               className="absolute top-2 right-4 font-normal text-white cursor-pointer text-2xl"
             >
-              {/* &times; */}
               ×
             </button>
-            {/* <h2 className="text-xl text-white font-bold mb-4">Search</h2> */}
             <input
               type="text"
               placeholder="Search"
               value={searchTerm}
-              // onChange={(e) => setSearchTerm(e.target.value)}
-              onChange={(e) => {setSearchTerm(e.target.value);setShuffled(false);}}
+              onChange={(e) => {setSearchTerm(e.target.value); setShuffled(false);}}
               className="w-full py-1 border-b mt-4 text-2xl font-extrabold text-white border-gray-300 focus:outline-none placeholder-gray-600"
             />
             <span className='text-sm text-gray-300'> Enter a name or stage name </span>
@@ -182,7 +190,7 @@ const Home = () => {
           <div
             onClick={() => handleClick(artist)}
             key={index}
-            className="artist-card will-change-transform opacity-0 translate-y-4 w-full bg-gradient-to-bl from-blue-200 via-pink-600 to-green-900 transition-transform duration-300 cursor-pointer overflow-hidden"
+            className="artist-card will-change-transform opacity-0 translate-y-8 w-full bg-gradient-to-bl from-blue-200 via-pink-600 to-green-900 transition-transform duration-300 cursor-pointer overflow-hidden"
             onMouseMove={(e) => handleMouseMove(e, index)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
