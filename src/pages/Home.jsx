@@ -115,21 +115,6 @@ const Home = () => {
       { width: '0%' },
       { width: '100%', duration: 1, delay: 0.9, ease: 'power2.out' }
     );
-    // Animate Count
-    // gsap.fromTo(
-    //   countRef.current,
-    //   { y: 20, opacity: 0 },
-    //   { y: 0, opacity: 1, duration: 0.6, delay: 1, ease: 'power2.out' }
-    // );
-    // gsap.to(animatedCount, {
-    //   duration: 1,
-    //   value: artists.length,
-    //   ease: 'power2.out',
-    //   onUpdate: function () {
-    //     setAnimatedCount(Math.floor(this.targets()[0].value));
-    //   },
-    //   delay: 1
-    // });
   }, []);
 
   useEffect(() => {
@@ -143,7 +128,7 @@ const Home = () => {
       const obj = { val: 0 };
       gsap.to(obj, {
         val: artistCount,
-        duration: 1.2,
+        duration: 1.4,
         delay: 1.6, // starts after fade-in
         ease: 'power2.out',
         onUpdate: () => {
@@ -302,11 +287,10 @@ const Home = () => {
         {hoveredIndex !== null && (
           <div
             key={hoveredIndex}
-            className="w-fit absolute bg-black/85 backdrop-blur-xs shadow-lg text-white p-3 pointer-events-none z-10 transition-all duration-50 ease-in-out space-y-1"
+            className="w-fit absolute bg-black/85 backdrop-blur-xs shadow-lg text-white p-3 pointer-events-none z-10 transition-all duration-0 ease-in-out space-y-1"
             style={{
               top: tooltipPos.top,
               left: tooltipPos.left,
-              // width: '160px',
             }}
           >
             <h2 className="text-xs font-bold uppercase overflow-hidden animate-slideDown">
