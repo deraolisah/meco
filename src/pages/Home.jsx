@@ -54,6 +54,7 @@ const Home = () => {
     gsap.to(cards, {
       y: 0,
       opacity: 1,
+      delay: 1.3,
       duration: 0.88,
       ease: "power3.out",
       stagger: 0.15,
@@ -78,6 +79,14 @@ const Home = () => {
   }, [displayedArtists]);
 
 
+  const borderRef = useRef(null);
+  useEffect(() => {
+    gsap.fromTo(
+      borderRef.current,
+      { width: '0%' },
+      { width: '100%', duration: 1, delay: 0.7, ease: 'power2.out' }
+    );
+  }, []);
 
 
 
@@ -136,7 +145,7 @@ const Home = () => {
 
   return (
     <main className='flex flex-col overflow-x-hidden'>
-      <div className='flex items-end justify-between py-4.5 border-b border-gray-300'>
+      <div className='flex items-end justify-between py-4.5 relative'>
         <div className='flex flex-col md:flex-row items-start md:items-end gap-1 md:gap-6'>
           <h1 className='text-2xl md:text-5xl font-bold'> Artists </h1>
           <span className='text-base font-semibold space-x-4 md:mb-px'>
@@ -157,6 +166,7 @@ const Home = () => {
           </span>
         </div>
         <p className='text-2xl font-extrabold'> ({artists.length}) </p>
+        <div ref={borderRef} className="absolute bottom-0 left-0 h-[1px] bg-gray-300"></div>
       </div>
 
       {/* SEARCH */}
