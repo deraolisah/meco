@@ -201,7 +201,7 @@ const Home = () => {
               <button
                 key={label}
                 ref={el => buttonRefs.current[index] = el}
-                className='cursor-pointer hover:underline'
+                className='cursor-pointer hover:text-gray-400 hover:underline'
                 onClick={() => {
                   if (label === "Sort") {
                     setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'));

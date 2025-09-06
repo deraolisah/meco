@@ -20,11 +20,11 @@ const ArtistDetail = () => {
           {artist.tag} <span className='text-gray-300'> ({artist.name}) </span> 
         </h1>
         <span className='text-sm font-semibold space-x-1'>
-          <Link to="/" className='hover:text-gray-400'> View All </Link> 
+          <Link to="/" className='hover:text-gray-400 hover:underline'> View All </Link> 
           / 
           {nextArtist ? (
-            <Link to={`/artist/${nextArtist.id}`} className='hover:text-gray-400'>
-              &nbsp; Next Artist
+            <Link to={`/artist/${nextArtist.id}`} className='hover:text-gray-400 hover:underline'>
+              &nbsp;Next Artist
             </Link>
           ) : (
             <span className='text-gray-500'> End of List </span>

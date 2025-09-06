@@ -77,7 +77,7 @@ const Navbar = () => {
 
       <ul className={`md:max-h-fit flex flex-col md:flex-row items-end md:items-center gap-2 md:gap-6 font-semibold w-full md:w-fit overflow-hidden transition-all duration-200 ${menuOpen ? "max-h-auto" : "max-h-0"}`}>
         {["Releases", "History", "Store", "Contact"].map((item, index) => (
-          <a key={item} href={`/${item.toLowerCase()}`} className='w-full md:w-fit text-end hover:text-gray-400 mt-4.5 md:mt-0' ref={el => menuItemRefs.current[index] = el}>
+          <a key={item} href={`/${item.toLowerCase()}`} className='w-full md:w-fit text-end hover:text-gray-400 hover:underline mt-4.5 md:mt-0' ref={el => menuItemRefs.current[index] = el}>
             {item}
           </a>
         ))}
