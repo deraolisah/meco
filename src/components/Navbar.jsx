@@ -63,10 +63,15 @@ const Navbar = () => {
 
       <div 
         ref={toggleIconRef} 
-        className='flex md:hidden cursor-pointer bg-gray-300 text-5xl w-6.5 h-6.5 items-center justify-center font-normal p-1.5' 
+        className='flex md:hidden cursor-pointer bg-gray-300 rounded-full text-lg items-center justify-center font-normal' 
         onClick={toggleMenu} 
         title='menu'>
-          {menuOpen ? '×' : '='}
+          {menuOpen ? 
+          <span className='p-1 px-3.5 text-3xl'> × </span> 
+          : 
+          // <span className='p-2'> {'>_<'} </span>
+          <span className='p-1 px-3.5 text-3xl'> {'='} </span>
+          }
       </div>
 
 
