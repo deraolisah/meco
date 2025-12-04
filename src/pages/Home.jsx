@@ -244,11 +244,11 @@ const Home = () => {
 
       {/* SEARCH */}
       {showSearch && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
-          <div className="bg-black p-8 shadow-lg w-[90%] max-w-md relative">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-center justify-center">
+          <div className="bg-white p-8 shadow-lg w-[90%] max-w-md relative">
             <button
               onClick={() => setShowSearch(false)}
-              className="absolute top-2 right-4 font-normal text-white cursor-pointer text-2xl"
+              className="absolute top-2 right-4 font-normal text-black cursor-pointer text-2xl"
             >
               ×
             </button>
@@ -257,9 +257,9 @@ const Home = () => {
               placeholder="Search"
               value={searchTerm}
               onChange={(e) => {setSearchTerm(e.target.value); setShuffled(false);}}
-              className="w-full py-1 border-b mt-4 text-2xl font-extrabold text-white border-gray-300 focus:outline-none placeholder-gray-600"
+              className="w-full py-1 border-b mt-4 text-2xl font-extrabold text-black border-gray-300 focus:outline-none placeholder-gray-600"
             />
-            <span className='text-sm text-gray-300'> Enter a name or stage name </span>
+            <span className='text-sm text-gray-300 italic'> Enter a name or stage name </span>
           </div>
         </div>
       )}

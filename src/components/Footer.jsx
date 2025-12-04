@@ -14,6 +14,8 @@ const Footer = () => {
  
       </p>
 
+      <p> Some images are AI Generated and not real people. </p>
+
       <br/>
       <span>
         Coded in Reactjs 9.1.3 by&nbsp;
@@ -21,7 +23,7 @@ const Footer = () => {
       </span>
 
       <br/>
-      <span> Browse <a href="https://github.com/deraolisah/meco" target='_blank' className='text-black font-bold hover:underline'>The GitHub Repo.</a></span>
+      <span> Browse <a href="https://github.com/deraolisah/meco" target='_blank' className='text-black font-bold hover:underline'> GitHub Repo. </a></span>
     </footer>
   )
 }

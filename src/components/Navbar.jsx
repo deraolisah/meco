@@ -2,34 +2,24 @@ import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 
 const Navbar = () => {
-
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  // GSAP ANIMATIONS
+  // Refs
   const borderRef = useRef(null);
   const logoRef = useRef(null);
   const menuItemRefs = useRef([]);
   menuItemRefs.current = [];
-
   const toggleIconRef = useRef(null);
+  const menuContainerRef = useRef(null);
 
+  // Initial animations (logo, toggle, border)
   useEffect(() => {
-     // Animate logo
     gsap.fromTo(
       logoRef.current,
       { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', }
-    );
-
-    // Animate Menu Button
-    gsap.fromTo(
-      toggleIconRef.current,
-      { scale: 0.6, rotate: -20, opacity: 0 },
-      { scale: 1, rotate: 0, opacity: 1, duration: 0.6, delay: 0.5, ease: 'power2.out' }
+      { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' }
     );
 
     // Animate menu items with stagger
@@ -42,11 +32,16 @@ const Navbar = () => {
         duration: 0.6,
         delay: 0.45,
         ease: 'power2.out',
-        stagger: 0.15,
+        stagger: 0.25,
       }
     );
 
-    // Animate border
+    gsap.fromTo(
+      toggleIconRef.current,
+      { scale: 0.8, y: 10, opacity: 0 },
+      { scale: 1, y: 0, opacity: 1, duration: 0.6, delay: 0.5, ease: 'power2.out' }
+    );
+
     gsap.fromTo(
       borderRef.current,
       { width: '0%' },
@@ -54,38 +49,93 @@ const Navbar = () => {
     );
   }, []);
 
+  // Menu open/close animations
+  useEffect(() => {
+    if (menuOpen) {
+      const tl = gsap.timeline();
 
+      // Slide in menu container
+      tl.fromTo(
+        menuContainerRef.current,
+        { x: '100%' },
+        { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
+      );
 
+      // tl.fromTo(
+      //   menuContainerRef.current,
+      //   { y: 30, opacity: 0 },
+      //   { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.15 }
+      // );
+
+      // Stagger menu items
+      tl.fromTo(
+        menuItemRefs.current,
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+          stagger: 0.15,
+        },
+        "-=0.2" // overlap slightly with container animation
+      );
+    } else {
+      // Animate closing (slide out)
+      gsap.to(menuContainerRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        ease: 'power2.in',
+        // stagger: 0.25
+      });
+    }
+  }, [menuOpen]);
 
   return (
-    <nav className='w-full pb-4 flex flex-wrap items-center justify-between relative'>
-      <a ref={logoRef} href='/' className='text-lg font-bold'> Meco Club </a>
+    <nav className="w-full pb-4 flex flex-wrap items-center justify-between relative">
+      <a ref={logoRef} href="/" className="text-lg font-bold">Meco Club</a>
 
-      <div 
-        ref={toggleIconRef} 
-        className='flex md:hidden cursor-pointer bg-gray-300 rounded-full text-lg items-center justify-center font-normal' 
-        onClick={toggleMenu} 
-        title='menu'>
-          {menuOpen ? 
-          <span className='p-1 px-3.5 text-3xl'> × </span> 
-          : 
-          // <span className='p-2'> {'>_<'} </span>
-          <span className='p-1 px-3.5 text-3xl'> {'='} </span>
-          }
-      </div>
+      <button
+        ref={toggleIconRef}
+        className={`z-50 cursor-pointer text-sm flex md:hidden font-medium ${menuOpen ? "fixed right-4" : ""}`}
+        onClick={toggleMenu}
+      >
+        {!menuOpen ? (
+          <span title="open menu"> Menu </span>
+        ) : (
+          <span title="close menu" className="border-b border-gray-500"> Close </span>
+        )}
+      </button>
 
+      {menuOpen && (
+        <div
+          className="fixed md:hidden top-0 left-0 z-10 w-full h-full bg-black/50 backdrop-blur-xs cursor-pointer"
+          onClick={() => setMenuOpen(false)}
+        ></div>
+      )}
 
-      <ul className={`md:max-h-fit flex flex-col md:flex-row items-end md:items-center gap-2 md:gap-6 font-semibold w-full md:w-fit overflow-hidden transition-all duration-200 ${menuOpen ? "max-h-auto" : "max-h-0"}`}>
-        {["Releases", "History", "Store", "Contact"].map((item, index) => (
-          <a key={item} href={`/${item.toLowerCase()}`} className='w-full md:w-fit text-end hover:text-gray-400 hover:underline mt-4.5 md:mt-0' ref={el => menuItemRefs.current[index] = el}>
+      <ul
+        ref={menuContainerRef}
+        className={`z-40 flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-6 fixed md:relative top-0 pt-15 md:top-0 right-[-100%] md:right-0 h-full w-68 md:w-fit p-4 md:p-0 bg-white md:bg-transparent transition-all duration-700 ${menuOpen ? "!right-0" : ""}`}
+        style={{ transform: 'translateY(110%)', opacity: '0' }} 
+      >
+        {["Releases", "About", "Contact", "Shop"].map((item, index) => (
+          <a
+            key={item}
+            href={`/${item.toLowerCase()}`}
+            className="text-3xl md:text-base font-semibold hover:text-gray-400 md:hover:underline w-full"
+            ref={el => menuItemRefs.current[index] = el}
+          >
             {item}
+            <hr className="w-full md:hidden border-gray-400" />
           </a>
         ))}
       </ul>
 
       <div ref={borderRef} className="absolute bottom-0 left-0 h-[1px] bg-gray-300"></div>
     </nav>
-  )
-}
+  );
+};
 
 export default Navbar;
