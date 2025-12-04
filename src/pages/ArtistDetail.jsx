@@ -8,6 +8,7 @@ const ArtistDetail = () => {
 
   const currentNum = artist.num;
   // const nextArtist = artists.find((a) => a.num === currentNum + 1);
+  const prevArtist = artists.find((a) => a.num === currentNum - 1) || artists[0];
   const nextArtist = artists.find((a) => a.num === currentNum + 1) || artists[0];
 
 
@@ -22,6 +23,12 @@ const ArtistDetail = () => {
         <span className='text-sm font-semibold space-x-1'>
           <Link to="/" className='hover:text-gray-400 hover:underline'> View All </Link> 
           / 
+          {prevArtist && (
+            <Link to={`/artist/${prevArtist.id}`} className='hover:text-gray-400 hover:underline'>
+              &nbsp; Previous Artist
+            </Link>
+          )}
+          /
           {nextArtist ? (
             <Link to={`/artist/${nextArtist.id}`} className='hover:text-gray-400 hover:underline'>
               &nbsp;Next Artist

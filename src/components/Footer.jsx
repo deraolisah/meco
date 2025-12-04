@@ -14,6 +14,7 @@ const Footer = () => {
  
       </p>
 
+      <br/>
       <p> Some images are AI Generated and not real people. </p>
 
       <br/>
