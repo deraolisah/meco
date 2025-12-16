@@ -21,6 +21,7 @@ const Releases = () => {
     );
   }, []);
 
+  
   return (
     <div className='flex flex-col gap-1 items-center justify-center h-full py-4'>
       <h2 ref={headerRef} className='font-bold text-2xl'> Releases </h2>

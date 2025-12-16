@@ -20,18 +20,18 @@ const ArtistDetail = () => {
         <h1 className='text-2xl md:text-4xl font-bold'> 
           {artist.tag} <span className='text-gray-300'> ({artist.name}) </span> 
         </h1>
-        <span className='text-sm font-semibold space-x-1'>
+        <span className='text-sm font-semibold space-x-2'>
           <Link to="/" className='hover:text-gray-400 hover:underline'> View All </Link> 
-          / 
+          <b>/</b> 
           {prevArtist && (
             <Link to={`/artist/${prevArtist.id}`} className='hover:text-gray-400 hover:underline'>
-              &nbsp; Previous Artist
+             Previous Artist
             </Link>
           )}
-          /
+          <b>/</b>
           {nextArtist ? (
             <Link to={`/artist/${nextArtist.id}`} className='hover:text-gray-400 hover:underline'>
-              &nbsp;Next Artist
+             Next Artist
             </Link>
           ) : (
             <span className='text-gray-500'> End of List </span>

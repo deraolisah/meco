@@ -1,9 +1,11 @@
 import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
+import { useLocation } from "react-router-dom";
+
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const location = useLocation();
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   // Refs
@@ -120,17 +122,24 @@ const Navbar = () => {
         className={`z-40 flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-6 fixed md:relative top-0 pt-15 md:top-0 right-[-100%] md:right-0 h-full w-68 md:w-fit p-4 md:p-0 bg-white md:bg-transparent transition-all duration-700 ${menuOpen ? "!right-0" : ""}`}
         style={{ transform: 'translateY(110%)', opacity: '0' }} 
       >
-        {["Releases", "About", "Contact", "Shop"].map((item, index) => (
-          <a
-            key={item}
-            href={`/${item.toLowerCase()}`}
-            className="text-3xl md:text-base font-semibold hover:text-gray-400 md:hover:underline w-full"
-            ref={el => menuItemRefs.current[index] = el}
-          >
-            {item}
-            <hr className="w-full md:hidden border-gray-400" />
-          </a>
-        ))}
+        {["Releases", "About", "Contact", "Shop"].map((item, index) => {
+          const path = `/${item.toLowerCase()}`;
+          const isActive = location.pathname === path;
+
+          return (
+            <a
+              key={item}
+              href={path}
+              className={`text-3xl md:text-base font-semibold w-full
+                ${isActive ? "text-gray-400 underline-0 md:underline" : "hover:text-gray-400 md:hover:underline"}
+              `}
+              ref={el => menuItemRefs.current[index] = el}
+            >
+              {item}
+              <hr className="w-full md:hidden border-gray-400" />
+            </a>
+          );
+        })}
       </ul>
 
       <div ref={borderRef} className="absolute bottom-0 left-0 h-[1px] bg-gray-300"></div>

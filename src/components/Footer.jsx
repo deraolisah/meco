@@ -23,7 +23,7 @@ const Footer = () => {
         <a href="https://deraolisah.com" target='_blank' className='text-black font-bold hover:underline'>Nathan</a>.
       </span>
 
-      <br/>
+      <br/><br/>
       <span> Browse <a href="https://github.com/deraolisah/meco" target='_blank' className='text-black font-bold hover:underline'> GitHub Repo. </a></span>
     </footer>
   )
