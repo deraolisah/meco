@@ -4,6 +4,13 @@ import { useLocation } from "react-router-dom";
 
 
 const Navbar = () => {
+  const navList = [
+    { name: "Releases", href: "/releases" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+    { name: "Shop", href: "/shop" }
+  ];
+
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -104,7 +111,13 @@ const Navbar = () => {
         onClick={toggleMenu}
       >
         {!menuOpen ? (
-          <span title="open menu"> Menu </span>
+          <span title="open menu" className='flex items-center gap-1'>
+            <span className='flex flex-col gap-1'>
+              <span className='w-4 h-0.5 bg-black flex rounded-full'></span>
+              <span className='w-4 h-0.5 bg-black flex rounded-full'></span>
+            </span>
+            Menu 
+          </span>
         ) : (
           <span title="close menu" className="border-b border-gray-500"> Close </span>
         )}
@@ -122,20 +135,29 @@ const Navbar = () => {
         className={`z-40 flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-6 fixed md:relative top-0 pt-15 md:top-0 right-[-100%] md:right-0 h-full w-68 md:w-fit p-4 md:p-0 bg-white md:bg-transparent transition-all duration-700 ${menuOpen ? "!right-0" : ""}`}
         style={{ transform: 'translateY(110%)', opacity: '0' }} 
       >
-        {["Releases", "About", "Contact", "Shop"].map((item, index) => {
-          const path = `/${item.toLowerCase()}`;
+        {/* {["Releases", "About", "Contact", "Shop"].map((item, index) => { */}
+        {navList.map((item, index) => {
+          const path = `/${item.name.toLowerCase()}`;
           const isActive = location.pathname === path;
 
           return (
             <a
               key={item}
-              href={path}
-              className={`text-3xl md:text-base font-semibold w-full
+              href={item.href}
+              className={`text-3xl md:text-base font-semibold w-fit group relative inline-block h-8 md:h-6 overflow-y-hidden transition-all duration-400 scrollbar-hidden
                 ${isActive ? "text-gray-400 underline-0 md:underline" : "hover:text-gray-400 md:hover:underline"}
               `}
               ref={el => menuItemRefs.current[index] = el}
             >
-              {item}
+              {/* Original text */}
+              <span className="w-full block transition-transform duration-300 group-hover:-translate-y-full">
+                {item.name}
+              </span>
+              {/* Duplicate text sliding in */}
+              <span className="w-full block absolute top-full left-0 transition-transform duration-300 group-hover:-translate-y-full">
+                {item.name}
+              </span>
+              {/* {item.name} */}
               <hr className="w-full md:hidden border-gray-400" />
             </a>
           );
